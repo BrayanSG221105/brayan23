@@ -1,6 +1,5 @@
 [phases.install]
 cmds = [
-  "cp .env.example .env",
   "composer install --no-interaction --prefer-dist --optimize-autoloader"
 ]
 
