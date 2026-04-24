@@ -28,10 +28,13 @@ COPY docker/apache-vhost.conf /etc/apache2/sites-available/000-default.conf
 
 # Install PHP dependencies first for better layer caching
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader --no-scripts
 
 # Copy app code
 COPY . .
+
+# Run post-install scripts after full app source is present
+RUN php artisan package:discover --ansi
 
 # Build frontend assets
 RUN npm install && npm run build
